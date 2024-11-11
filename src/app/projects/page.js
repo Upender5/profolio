@@ -1,14 +1,17 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { fetchProfessionalProjects, fetchPersonalProjects, addProject, editProject } from '../../api/projects';
+import { fetchProjects, addProject, editProject } from '../../api/projects';
 
 export default function ProjectsPage() {
     const [professionalProjects, setProfessionalProjects] = useState([]);
     const [personalProjects, setPersonalProjects] = useState([]);
-    const [isAdding, setIsAdding] = useState(false);  // Toggle for add form
-    const [isEditing, setIsEditing] = useState(null); // Stores the project ID being edited
-    const [formData, setFormData] = useState({  // Form data for add/edit
+    const [collegeProjects, setCollegeProjects] = useState([]);
+    const [isAdding, setIsAdding] = useState(false);
+    const [isEditing, setIsEditing] = useState(null);
+    const [formData, setFormData] = useState({
         title: '',
         client: '',
         communicationProtocols: '',
@@ -21,18 +24,19 @@ export default function ProjectsPage() {
     });
 
     useEffect(() => {
-        async function getProfessionalProjects() {
-            const data = await fetchProfessionalProjects();
-            setProfessionalProjects(data);
+        async function loadProjects() {
+            try {
+                const { professionalProjects = [], personalProjects = [], collegeProjects = [] } = await fetchProjects();
+                
+                setProfessionalProjects(professionalProjects, collegeProjects);
+                setPersonalProjects(personalProjects);
+                setCollegeProjects(collegeProjects);
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
         }
 
-        async function getPersonalProjects() {
-            const data = await fetchPersonalProjects();
-            setPersonalProjects(data);
-        }
-
-        getProfessionalProjects();
-        getPersonalProjects();
+        loadProjects();
     }, []);
 
     const handleInputChange = (e) => {
@@ -42,26 +46,28 @@ export default function ProjectsPage() {
 
     const handleAddToggle = () => {
         setIsAdding(!isAdding);
-        setFormData({});  // Reset form data when toggling
+        setFormData({});
     };
 
     const handleEditToggle = (project) => {
         setIsEditing(project._id);
-        setFormData(project);  // Populate form data with the selected project for editing
+        setFormData(project);
     };
 
-    const handleAddProject = async () => {
+    const handleAddProject = async (e) => {
+        e.preventDefault();
         const newProject = await addProject(formData);
         setProfessionalProjects([...professionalProjects, newProject]);
-        handleAddToggle();  // Close add form
+        handleAddToggle();
     };
 
-    const handleEditProject = async () => {
+    const handleEditProject = async (e) => {
+        e.preventDefault();
         const updatedProject = await editProject(isEditing, formData);
         setProfessionalProjects(professionalProjects.map(project => 
             project._id === isEditing ? updatedProject : project
         ));
-        setIsEditing(null);  // Exit edit mode
+        setIsEditing(null);
     };
 
     return (
@@ -70,7 +76,6 @@ export default function ProjectsPage() {
             <h1>My Projects</h1>
             <p>Here are some of the projects I have worked on:</p>
 
-            {/* Add Project Form */}
             {isAdding && (
                 <div>
                     <h2>Add New Project</h2>
@@ -87,7 +92,6 @@ export default function ProjectsPage() {
                 </div>
             )}
 
-            {/* Edit Project Form */}
             {isEditing && (
                 <div>
                     <h2>Edit Project</h2>
@@ -109,28 +113,58 @@ export default function ProjectsPage() {
 
             <div className="project-list">
                 <h2>Professional Projects</h2>
-                {professionalProjects.map((project, index) => (
-                    <div key={index}>
-                        <h3>{index + 1}. {project.title}</h3>
-                        <p><strong>Client:</strong> {project.client}</p>
-                        <p><strong>Communication Protocols:</strong> {project.communicationProtocols}</p>
-                        <p><strong>Database:</strong> {project.database}</p>
-                        <p><strong>Backend:</strong> {project.backend}</p>
-                        <p><strong>Frontend:</strong> {project.frontend}</p>
-                        <p><strong>Project Description:</strong> {project.projectDescription}</p>
-
-                        <button onClick={() => handleEditToggle(project)}>Edit</button>
-                    </div>
-                ))}
+                {professionalProjects.length > 0 ? (
+                    professionalProjects.map((project, index) => (
+                        <div key={index}>
+                            <h3>{index + 1}. {project.title}</h3>
+                            <p><strong>Client:</strong> {project.client}</p>
+                            <p><strong>Communication Protocols:</strong> {project.communicationProtocols}</p>
+                            <p><strong>Database:</strong> {project.database}</p>
+                            <p><strong>Backend:</strong> {project.backend}</p>
+                            <p><strong>Frontend:</strong> {project.frontend}</p>
+                            <p><strong>Project Description:</strong> {project.projectDescription}</p>
+                            <button onClick={() => handleEditToggle(project)}>Edit</button>
+                        </div>
+                    ))
+                ) : (
+                    <p>No professional projects available.</p>
+                )}
 
                 <h2>Personal Projects</h2>
-                {personalProjects.map((project, index) => (
-                    <div key={index}>
-                        <h3>{index + 1}. {project.title}</h3>
-                        <p>{project.description}</p>
-                        <a href={project.link} target="_blank" rel="noopener noreferrer">View on {project.platform}</a>
-                    </div>
-                ))}
+                {personalProjects.length > 0 ? (
+                    personalProjects.map((project, index) => (
+                        <div key={index}>
+                            <h3>{index + 1}. {project.title}</h3>
+                            <p><strong>Client:</strong> {project.client}</p>
+                            <p><strong>Communication Protocols:</strong> {project.communicationProtocols}</p>
+                            <p><strong>Database:</strong> {project.database}</p>
+                            <p><strong>Backend:</strong> {project.backend}</p>
+                            <p><strong>Frontend:</strong> {project.frontend}</p>
+                            <p><strong>Project Description:</strong> {project.projectDescription}</p>
+                            <button onClick={() => handleEditToggle(project)}>Edit</button>
+                        </div>
+                    ))
+                ) : (
+                    <p>No personal projects available.</p>
+                )}
+
+                <h2>College Projects</h2>
+                {collegeProjects.length > 0 ? (
+                    collegeProjects.map((project, index) => (
+                        <div key={index}>
+                            <h3>{index + 1}. {project.title}</h3>
+                            <p><strong>Client:</strong> {project.client}</p>
+                            <p><strong>Communication Protocols:</strong> {project.communicationProtocols}</p>
+                            <p><strong>Database:</strong> {project.database}</p>
+                            <p><strong>Backend:</strong> {project.backend}</p>
+                            <p><strong>Frontend:</strong> {project.frontend}</p>
+                            <p><strong>Project Description:</strong> {project.projectDescription}</p>
+                            <button onClick={() => handleEditToggle(project)}>Edit</button>
+                        </div>
+                    ))
+                ) : (
+                    <p>No college projects available.</p>
+                )}
             </div>
 
             <Footer />

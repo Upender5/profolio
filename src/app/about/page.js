@@ -11,14 +11,25 @@ export default function AboutPage() {
   const [aboutData, setAboutData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    position: '',
-    socialMedia: {
+    fullName: '',
+    role: '',
+    location: '',
+    contact: '',
+    email: '',
+    socialMediaLinks: {
       linkedin: '',
       github: '',
       npm: ''
     },
-    professionalJourney: '',
-    technicalSkills: [],
+    technicalSkills: {
+      serverSideLanguages: [],
+      database: [],
+      sourceControl: [],
+      operatingSystems: [],
+      applicationFrameworks: [],
+      caching: [],
+      messageProtocol: []
+    },
     workExperience: [],
     education: []
   });
@@ -26,14 +37,41 @@ export default function AboutPage() {
   useEffect(() => {
     const getData = async () => {
       const data = await fetchAbout();
-      console.log(data,"data");
-      
-      setAboutData(data);
-      setFormData(data); // Initialize form with fetched data
+
+      if (data && data.length > 0) {
+        const firstData = data[0];
+
+        setAboutData(firstData);
+        setFormData({
+          fullName: firstData.fullName || '',
+          role: firstData.role || '',
+          location: firstData.location || '',
+          contact: firstData.contact || '',
+          email: firstData.email || '',
+          socialMediaLinks: firstData.socialMediaLinks.reduce((acc, link) => {
+            if (link.platform === 'linkedin') acc.linkedin = link.url;
+            if (link.platform === 'github') acc.github = link.url;
+            if (link.platform === 'npm') acc.npm = link.url;
+            return acc;
+          }, {}),
+          technicalSkills: firstData.technicalSkills || {
+            serverSideLanguages: [],
+            database: [],
+            sourceControl: [],
+            operatingSystems: [],
+            applicationFrameworks: [],
+            caching: [],
+            messageProtocol: []
+          },
+          workExperience: firstData.workExperience || [],
+          education: firstData.education || []
+        });
+      }
     };
 
     getData();
   }, []);
+
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -49,7 +87,7 @@ export default function AboutPage() {
 
   const handleSubmit = async () => {
     try {
-      await editAbout(aboutData.id, formData);
+      await editAbout(aboutData._id, formData);
       setAboutData(formData);
       setIsEditing(false);
     } catch (error) {
@@ -59,67 +97,51 @@ export default function AboutPage() {
 
   return (
     <div>
-      <Header />
-      <h3>Associate Backend Developer</h3>
+      {/* <Header /> */}
+      <h3>Role: {aboutData?.role}</h3>
+
+      <p><strong>Location:</strong> {aboutData?.location}</p>
+      <p><strong>Contact:</strong> {aboutData?.contact}</p>
+      <p><strong>Email:</strong> {aboutData?.email}</p>
 
       <h4>Social Media</h4>
       <ul>
         <li>
-          <a href={aboutData?.socialMedia?.linkedin} target="_blank" rel="noopener noreferrer">
+          <a href={formData.socialMediaLinks.linkedin} target="_blank" rel="noopener noreferrer">
             <FaLinkedin /> LinkedIn
           </a>
         </li>
         <li>
-          <a href={aboutData?.socialMedia?.github} target="_blank" rel="noopener noreferrer">
+          <a href={formData.socialMediaLinks.github} target="_blank" rel="noopener noreferrer">
             <FaGithub /> GitHub
           </a>
         </li>
         <li>
-          <a href={aboutData?.socialMedia?.npm} target="_blank" rel="noopener noreferrer">
+          <a href={formData.socialMediaLinks.npm} target="_blank" rel="noopener noreferrer">
             <FaNpm /> npm
           </a>
         </li>
       </ul>
 
-      <h4>Professional Journey</h4>
-      {isEditing ? (
-        <textarea
-          name="professionalJourney"
-          value={formData.professionalJourney}
-          onChange={handleInputChange}
-        />
-      ) : (
-        <p>{aboutData?.professionalJourney}</p>
-      )}
-
       <h4>Technical Skills</h4>
-      {isEditing ? (
-        <textarea
-          name="technicalSkills"
-          value={formData.technicalSkills.join(', ')}
-          onChange={(e) => setFormData((prev) => ({
-            ...prev,
-            technicalSkills: e.target.value.split(', ')
-          }))}
-        />
-      ) : (
-        <ul>
-          {aboutData?.technicalSkills?.map((skill, index) => (
-            <li key={index}>{skill}</li>
-          ))}
-        </ul>
-      )}
+      {Object.entries(aboutData?.technicalSkills || {}).map(([skillCategory, skills]) => (
+        <div key={skillCategory}>
+          <strong>{skillCategory.replace(/([A-Z])/g, ' $1')}:</strong>
+          <ul>
+            {skills.map((skill, index) => (
+              <li key={index}>{skill}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
 
       <h4>Work Experience</h4>
       {aboutData?.workExperience?.map((experience, index) => (
-        <div key={index}>
-          <strong>Position:</strong> {experience.position} - {experience.company} <br />
-          <strong>Duration:</strong> {experience.duration} <br />
-          <strong>Company Website:</strong>
-          <a href={experience.website} target="_blank" rel="noopener noreferrer">
-            Visit {experience.company}
-          </a><br />
-          <strong>Description:</strong> {experience.description}
+        <div key={experience._id}>
+          <strong>Company:</strong> {experience.companyName} <br />
+          <strong>Role:</strong> {experience.role} <br />
+          <strong>Date:</strong> {experience.date} <br />
+          <strong>About Role:</strong> {experience.aboutRole}
         </div>
       ))}
 
@@ -128,8 +150,11 @@ export default function AboutPage() {
         {aboutData?.education?.map((edu, index) => (
           <li key={index}>
             <strong>Degree:</strong> {edu.degree} <br />
-            <strong>Institution:</strong> {edu.institution} <br />
-            <strong>Year of Graduation:</strong> {edu.graduationYear}
+            <strong>Institution Name:</strong> {edu.instituteName}branchName <br />
+            <strong>Branch Name:</strong> {edu.branchName} <br />
+            <strong>Location:</strong> {edu.location} <br />
+            <strong>Percentage:</strong> {edu.percentage} <br />
+            <strong>Year of Graduation:</strong> {edu.passoutYear}
           </li>
         ))}
       </ul>

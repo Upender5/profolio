@@ -1,11 +1,14 @@
 .profileContainer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: #000; 
-  color: #fff; 
+  justify-content: center; /* Center align content */
+  background-color: #000;
+  color: #fff;
   padding: 2rem;
   border-radius: 10px;
+  max-width: 1200px; /* Prevents it from expanding too much */
+  margin: 0 auto; /* Centers horizontally */
+  min-height: 100vh; /* Takes up the full viewport height */
 }
 
 .profileContent {
