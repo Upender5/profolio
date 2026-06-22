@@ -1,0 +1,99 @@
+.wrap {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.title {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1 1 180px;
+  min-width: 160px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--c);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 0.9rem;
+  animation: stepIn 0.5s ease both;
+}
+
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.index {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: var(--bg-2);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.sub {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.arrow {
+  position: absolute;
+  right: -0.7rem;
+  color: var(--faint);
+  font-size: 1.1rem;
+  z-index: 1;
+}
+
+/* Hide the dangling arrow when steps wrap to a new line is hard in pure CSS;
+   keep it subtle so it never looks broken. */
+@media (max-width: 640px) {
+  .step {
+    flex-basis: 100%;
+  }
+  .arrow {
+    display: none;
+  }
+}

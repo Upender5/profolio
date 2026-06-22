@@ -1,0 +1,36 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text);
+}
+.item:hover {
+  color: var(--text);
+}
+
+.item div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.item strong {
+  font-size: 1rem;
+}
+.item span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  font-size: 1.6rem;
+  color: var(--cyan);
+  flex-shrink: 0;
+}

@@ -1,46 +1,29 @@
-// 'use client';
-// import { useEffect, useState } from 'react';
+import Footer from '../../components/Footer';
 
-// export default function BlogPost({ params }) {
-//     const { slug } = params; // Get the slug from the URL
-//     const [post, setPost] = useState(null);
-//     const [loading, setLoading] = useState(true);
-//     const [error, setError] = useState(null);
+export const metadata = {
+  title: 'Blog · Upender',
+  description: 'Writing on backend architecture, Node.js, and scalable systems — coming soon.',
+};
 
-//     useEffect(() => {
-//         const fetchPost = async () => {
-//             try {
-//                 // Replace this URL with your API endpoint or local data fetching logic
-//                 const response = await fetch(`/api/posts/${slug}`);
-                
-//                 if (!response.ok) {
-//                     throw new Error('Post not found');
-//                 }
-
-//                 const data = await response.json();
-//                 setPost(data);
-//             } catch (err) {
-//                 setError(err.message);
-//             } finally {
-//                 setLoading(false);
-//             }
-//         };
-
-//         fetchPost();
-//     }, [slug]);
-
-//     if (loading) {
-//         return <p>Loading...</p>;
-//     }
-
-//     if (error) {
-//         return <p>Error: {error}</p>;
-//     }
-
-//     return (
-//         <div>
-//             <h1>{post.title}</h1>
-//             <p>{post.content}</p>
-//         </div>
-//     );
-// }
+export default function BlogPage() {
+  return (
+    <div>
+      <section className="section">
+        <div className="container" style={{ textAlign: 'center', padding: '4rem 0' }}>
+          <span className="eyebrow">Blog</span>
+          <h1 className="section-title gradient-text" style={{ fontSize: '2.4rem' }}>
+            Coming Soon
+          </h1>
+          <p className="section-sub" style={{ maxWidth: '34rem', margin: '0.5rem auto 2rem' }}>
+            I&apos;m putting together write-ups on backend architecture, Redis-driven event systems,
+            and scaling multi-tenant SaaS. Check back shortly.
+          </p>
+          <a href="/projects" className="btn btn-primary">
+            Explore my projects instead →
+          </a>
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
+}

@@ -1,68 +1,166 @@
-/* HeroSection.module.css */
-
 .hero {
-    position: relative;
-    background-image: url('https://s3.ap-south-1.amazonaws.com/static.upender.dev/upender.png'); /* replace with your image path */
-    background-size: cover;
-    background-position: right;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  padding: 4rem 0 3rem;
 }
 
-.overlay {
-    background: rgba(0, 0, 0, 0.5); /* Optional overlay for text readability */
-    color: #fff;
-    text-align: center;
-    padding: 2rem;
-    border-radius: 10px;
+.grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
 }
 
-.title {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+.copy {
+  max-width: 36rem;
 }
 
-.description {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+.avatarRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
 }
 
-.buttons {
-    display: flex;
-    gap: 1rem;
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  border: 2px solid var(--border);
+  box-shadow: 0 0 0 4px rgba(0, 210, 255, 0.12);
 }
 
-.primaryButton, .secondaryButton {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+.available {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
 }
 
-.primaryButton {
-    background: #fff;
-    color: #000;
+.availableDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulseDot 1.8s ease-in-out infinite;
 }
 
-.secondaryButton {
-    background: transparent;
-    color: #fff;
-    border: 1px solid #fff;
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
-.primaryButton:hover {
-    background: #f1f1f1;
+.name {
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0.3rem 0 0.4rem;
 }
 
-.secondaryButton:hover {
-    background: rgba(255, 255, 255, 0.2);
+.role {
+  font-size: 1.25rem;
+  color: var(--cyan);
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.summary {
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  margin: 1.8rem 0 1.4rem;
+  flex-wrap: wrap;
+}
+
+.social {
+  display: flex;
+  gap: 1.1rem;
+  font-size: 1.4rem;
+}
+.social a {
+  color: var(--muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.social a:hover {
+  color: var(--cyan);
+  transform: translateY(-3px);
+}
+
+/* Visual / window */
+.visual {
+  display: flex;
+  justify-content: center;
+  animation-delay: 0.15s;
+}
+
+.window {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: float 6s ease-in-out infinite;
+}
+
+.windowBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+.windowBar span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.windowBar span:nth-child(1) {
+  background: #ff6b81;
+}
+.windowBar span:nth-child(2) {
+  background: #ffd93d;
+}
+.windowBar span:nth-child(3) {
+  background: #2dd4a7;
+}
+.windowBar code {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--faint);
+}
+
+.diagram {
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .visual {
+    order: -1;
+  }
 }

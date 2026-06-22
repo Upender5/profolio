@@ -1,26 +1,79 @@
 .navbar {
-    display: flex;
-    justify-content: flex-start;
-    padding: 1rem 2rem;
-    background-color: #000; /* Black background for the navbar */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 14, 26, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.brand:hover {
+  color: var(--text);
+}
+.brandDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-grad);
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.7);
+}
+.brandSuffix {
+  color: var(--cyan);
+}
+
+.navItems {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.navLink {
+  color: var(--muted);
+  font-size: 0.95rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.navLink:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+}
+.active {
+  color: var(--cyan);
+  background: rgba(0, 210, 255, 0.08);
+}
+
+@media (max-width: 560px) {
+  .inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
   }
-  
   .navItems {
-    display: flex;
-    gap: 1.5rem;
+    justify-content: flex-start;
   }
-  
   .navLink {
-    color: #fff; /* White text */
-    text-decoration: none;
-    font-size: 1.2rem;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.9rem;
   }
-  
-  .navLink:hover {
-    background-color: #00bcd4; /* Hover effect with bright blue */
-    color: #fff;
-  }
-  
+}

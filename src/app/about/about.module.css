@@ -1,0 +1,93 @@
+.bio {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 50rem;
+  margin-bottom: 3rem;
+}
+
+.h2 {
+  font-size: 1.6rem;
+  margin: 3rem 0 1.5rem;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(var(--cyan), var(--purple), transparent);
+}
+
+.tItem {
+  position: relative;
+  margin-bottom: 2.2rem;
+}
+
+.tDot {
+  position: absolute;
+  left: -1.5rem;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 4px rgba(0, 210, 255, 0.15);
+}
+
+.tHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tRole {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.tPeriod {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.tCompany {
+  color: var(--cyan);
+  font-weight: 600;
+  margin: 0.2rem 0 0.7rem;
+}
+
+.tList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tList li {
+  position: relative;
+  padding-left: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.tList li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--purple);
+}
+
+.eduGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}

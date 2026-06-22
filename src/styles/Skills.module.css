@@ -1,0 +1,29 @@
+.coreGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.85rem;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.badge:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 210, 255, 0.45);
+  box-shadow: var(--shadow);
+}
+
+.badgeIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}

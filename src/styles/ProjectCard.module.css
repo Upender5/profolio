@@ -1,0 +1,46 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--text);
+}
+.card:hover {
+  color: var(--text);
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.tagline {
+  color: var(--cyan);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0.3rem 0 0.7rem;
+}
+
+.summary {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.stack {
+  margin-bottom: 0.9rem;
+}
+
+.link {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--cyan);
+  font-weight: 600;
+}
